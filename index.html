@@ -13,6 +13,9 @@
     <input type="text" name="email" id="email" placeholder="email">
     <input type="text" name="password" id="password" placeholder="password">
     <button class="submit">Login</button>
+
+    <button class="jwt">Jwt Button</button>
+
     
   </form>
   <script>
@@ -24,6 +27,17 @@
         method: 'post',
         url: 'http://127.0.0.1:3000/user/login',
         withCredentials:false
+      }).then(function (response) {
+        console.log(response);
+      });
+      })
+
+      document.querySelector('.jwt').addEventListener('click',(e)=>{
+      e.preventDefault()
+
+      axios({
+        method: 'post',
+        url: 'http://127.0.0.1:3000/user/test',
       }).then(function (response) {
         console.log(response);
       });

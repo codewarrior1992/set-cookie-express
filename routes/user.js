@@ -1,6 +1,20 @@
 const router = require('express').Router();
 const jwt = require('jsonwebtoken');
 
+function decodeJWT(req,res,next){
+  console.log('token from client',req.cookies.token);
+  
+  try{
+    let decode = jwt.verify(req.cookies.token,"hello");
+    req.decode = decode;
+    next()
+  } catch(err){
+    res.send({
+      err
+    })
+  }
+}
+
 router.post('/login',(req,res)=>{
 
   let token = jwt.sign({email:req.email}, "hello" , {
@@ -17,14 +31,10 @@ router.post('/login',(req,res)=>{
   })
 })
 
-
-router.post('/test',(req,res)=>{
-
-  console.log('REQ_TOKEN: ', req.cookies.token);
-
+router.post('/test', decodeJWT ,(req,res)=>{
   res.json({
-    cookie: req.cookies.token,
-    msg :'成功夾帶 cookie'
+    msg :'success',
+    decode : req.decode
   })
 })
 
